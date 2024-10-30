@@ -1,118 +1,115 @@
 ---
 description: >-
-  Become a validator and help secure eth2, a proof-of-stake blockchain. Anyone
-  with 32 ETH can join.
+  Conviértete en validador y ayuda a proteger eth2, una cadena de bloques de prueba de participación. 
+  Cualquiera con 32 ETH puede unirse.
 ---
 
-# Guide \| How to setup a validator on ETH2 mainnet
+# Guía | Cómo configurar un validador en la red principal de ETH2
 
 {% hint style="success" %}
 As of Dec 5 2020, this guide is updated for **mainnet.** 😁
 {% endhint %}
 
-#### ✨ For the testnet guide, [please click here](guide-or-how-to-setup-a-validator-on-eth2-testnet.md).
+#### ✨ Para obtener la guía de la red de prueba, [haga clic aquí](guide-or-how-to-setup-a-validator-on-eth2-testnet.md).
 
 ![](../../.gitbook/assets/gg.jpg)
 
-\*\*\*\*🎊 **2020-12 Update**: We're on [Gitcoin](https://gitcoin.co/grants/1653/eth2-staking-guides-by-coincashew), where you can contribute via [quadratic funding](https://vitalik.ca/general/2019/12/07/quadratic.html) and make a big impact.  Your **1 DAI** contribution equals a **23 DAI** match.
+****🎊 Actualización 2020-12 : Estamos en [Gitcoin](https://gitcoin.co/grants/1653/eth2-staking-guides-by-coincashew), donde puedes contribuir a través de [quadratic funding](https://vitalik.ca/general/2019/12/07/quadratic.html) y generar un gran impacto. Tu contribución de 1 DAI equivale a una contribución equivalente de 23 DAI .
 
-Please [check us out](https://gitcoin.co/grants/1653/eth2-staking-guides-by-coincashew). Thank you!🙏
+¡ Visítanos ![check us out](https://gitcoin.co/grants/1653/eth2-staking-guides-by-coincashew). ¡Gracias! 🙏
 
 {% embed url="https://gitcoin.co/grants/1653/eth2-staking-guides-by-coincashew" %}
 
-## 🏁 0. Prerequisites
+🏁 0. Requisitos previos
 
-### 👩💻Skills for operating a eth2 validator and beacon node
+👩💻Habilidades para operar un nodo de baliza y validador eth2
+Como validador de eth2, normalmente tendrás las siguientes capacidades:
 
-As a validator for eth2, you will typically have the following abilities:
+* Conocimiento operativo de cómo configurar, ejecutar y mantener un nodo de baliza eth2 y un validador de forma continua.
+* Un compromiso a largo plazo para mantener su validador 24/7/365
+* Conocimientos básicos del sistema operativo
+* He aprendido lo esencial viendo ['Introducción a Eth2 y staking para principiantes' de Superphiz](https://www.youtube.com/watch?v=tpkpW031RCI)
+* Haber aprobado o estar inscrito activamente en el [curso de Máster de Estudios Eth2](https://ethereumstudymaster.com/)
+* Y haber leido las [8 cosas que todo validador de Eth2 debe saber.](https://medium.com/chainsafe-systems/8-things-every-eth2-validator-should-know-before-staking-94df41701487)
 
-* operational knowledge of how to set up, run and maintain a eth2 beacon node and validator continuously
-* a long term commitment to maintain your validator 24/7/365
-* basic operating system skills
-* have learned the essentials by watching ['Intro to Eth2 & Staking for Beginners' by Superphiz](https://www.youtube.com/watch?v=tpkpW031RCI)
-* have passed or is actively enrolled in the [Eth2 Study Master course](https://ethereumstudymaster.com/)
-* and have read the [8 Things Every Eth2 validator should know.](https://medium.com/chainsafe-systems/8-things-every-eth2-validator-should-know-before-staking-94df41701487)
+###🎗 Requisitos mínimos de configuración
 
-### 🎗 **Minimum Setup Requirements**
+* **Sistema operativo:** Linux de 64 bits (es decir, Ubuntu 20.04 LTS Server o Desktop)
+* **Procesador:** CPU de doble núcleo, Intel Core i5-760 o AMD FX-8100 o superior
+* **Memoria:** 8GB RAM
+* **Almacenamiento:** 20GB SSD
+* **Internet:** Conexión a Internet de banda ancha con velocidades de al menos 1 Mbps.
+* **Energia:** Energía eléctrica confiable.
+* **Saldo de ETH:** al menos 32 ETH y algo de ETH para tarifas de transacción de depósito
+* **Wallet**: Metamask instalado
 
-* **Operating system:** 64-bit Linux \(i.e. Ubuntu 20.04 LTS Server or Desktop\)
-* **Processor:** Dual core CPU, Intel Core i5–760 or AMD FX-8100 or better
-* **Memory:** 8GB RAM
-* **Storage:** 20GB SSD
-* **Internet:** Broadband internet connection with speeds at least 1 Mbps.
-* **Power:** Reliable electrical power.
-* **ETH balance:** at least 32 ETH and some ETH for deposit transaction fees
-* **Wallet**: Metamask installed
+### 🏋♂ Configuración de hardware recomendada
 
-### 🏋♂ Recommended Hardware Setup
-
-* **Operating system:** 64-bit Linux \(i.e. Ubuntu 20.04 LTS Server or Desktop\)
-* **Processor:** Quad core CPU, Intel Core i7–4770 or AMD FX-8310 or better
-* **Memory:** 16GB RAM or more
-* **Storage:** 1TB SSD or more
-* **Internet:** Broadband internet connections with speeds at least 10 Mbps without data limit.
-* **Power:** Reliable electrical power with uninterruptible power supply \(UPS\)
-* **ETH balance:** at least 32 ETH and some ETH for deposit transaction fees
-* **Wallet**: Metamask installed
+* **Sistema Operativo:** 64-bit Linux \(i.e. Ubuntu 20.04 LTS Server or Desktop\)
+* **Procesador:** CPU de cuatro núcleos, Intel Core i7–4770 o AMD FX-8310 o superior
+* **Memoria:** 16GB RAM o mas
+* **Almacenamiento:** 1TB SSD o mas
+* **Internet:** Conexiones a internet de banda ancha con velocidades mínimas de 10 Mbps sin límite de datos.
+* **Energia:** Energía eléctrica confiable con sistema de alimentación ininterrumpida (UPS)
+* **Saldo de ETH:** al menos 32 ETH y algo de ETH para tarifas de transacción de depósito
+* **Monedero**: Metamask instalado
 
 {% hint style="success" %}
-✨ **Pro Validator Tip**: Highly recommend you begin with a brand new instance of an OS, VM, and/or machine. Avoid headaches by NOT reusing testnet keys, wallets, or databases for your validator.
-{% endhint %}
+✨ **Consejo de validación profesional**: te recomiendo que comiences con una instancia completamente nueva de un sistema operativo, una máquina virtual o una máquina. Evita dolores de cabeza al NO reutilizar claves, billeteras o bases de datos de la red de prueba para tu validador. {% endhint %}
 
-### 🔓 Recommended eth2 validator Security Best Practices
+### 🔓 Prácticas recomendadas de seguridad para el validador eth2
 
-If you need ideas or a reminder on how to secure your validator, refer to
+Si necesita ideas o un recordatorio sobre cómo proteger su validador, consulte
 
 {% page-ref page="guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node.md" %}
 
-### 🛠 Setup Ubuntu
+### 🛠 Configurar Ubuntu
 
-If you need to install Ubuntu Server, refer to
+Si necesita instalar Ubuntu Server, consulte
 
 {% embed url="https://ubuntu.com/tutorials/install-ubuntu-server\#1-overview" %}
 
-Or Ubuntu Desktop,
+O escritorio Ubuntu,
 
 {% page-ref page="../overview-xtz/guide-how-to-setup-a-baker/install-ubuntu.md" %}
 
-### 🎭 Setup Metamask
+### 🎭 Configurar Metamask
 
-If you need to install Metamask, refer to
+Si necesita instalar Metamask, consulte
 
 {% page-ref page="../../wallets/browser-wallets/metamask-ethereum.md" %}
 
-## 🌱 1. Buy/exchange or consolidate ETH
+## 🌱 1. Comprar/cambiar o consolidar ETH
 
 {% hint style="info" %}
-Every 32 ETH you own allows you to make 1 validator. You can run thousands of validators with your beacon node.
+Cada 32 ETH que poseas te permitirán crear un validador. Puedes ejecutar miles de validadores con tu nodo de baliza. 
 {% endhint %}
 
-Your ETH \(or multiples of 32 ETH\) should be consolidated into a single address accessible with Metamask.
+Su ETH (o múltiplos de 32 ETH) deben consolidarse en una única dirección accesible con Metamask.
 
-If you need to buy/exchange or top up your ETH to a multiple of 32, check out:
-
+Si necesita comprar/intercambiar o recargar su ETH a un múltiplo de 32, consulte:
 {% page-ref page="guide-how-to-buy-eth.md" %}
 
-## 👩💻 2. Signup to be a validator at the Launchpad
+## 👩💻 2. Regístrate para ser validador en Launchpad
 
-1. Install dependencies, the ethereum foundation deposit tool and generate your two sets of key pairs.
+1. Instale dependencias, la herramienta de depósito de la fundación Ethereum y genere sus dos conjuntos de pares de claves.
 
 {% hint style="info" %}
-Each validator will have two sets of key pairs. A **signing key** and a **withdrawal key.** These keys are derived from a single mnemonic phrase. [Learn more about keys.](https://blog.ethereum.org/2020/05/21/keys/)
+Cada validador tendrá dos conjuntos de pares de claves: una clave de firma y una clave de retiro. Estas claves se derivan de una sola frase mnemotécnica. [Obtenga más información sobre las claves.](https://blog.ethereum.org/2020/05/21/keys/)
 {% endhint %}
 
-You have the choice of downloading the pre-built [ethereum foundation deposit tool](https://github.com/ethereum/eth2.0-deposit-cli) or building it from source.
+Tienes la opción de descargar la [herramienta de depósito de la Fundación Ethereum](https://github.com/ethereum/eth2.0-deposit-cli) previamente creada o crearla desde la fuente.
 
 {% tabs %}
-{% tab title="Build from source code" %}
-Install dependencies.
+{% tab title="Construir desde el código fuente" %} 
+Instalar dependencias.
 
 ```text
 sudo apt update
 sudo apt install python3-pip git -y
 ```
 
-Download source code and install.
+Descargue el código fuente e instálelo.
 
 ```text
 cd $HOME
@@ -121,7 +118,7 @@ cd eth2deposit-cli
 sudo ./deposit.sh install
 ```
 
-Make a new mnemonic.
+Crea un nuevo mnemónico.
 
 ```text
 ./deposit.sh new-mnemonic --chain mainnet
@@ -129,7 +126,7 @@ Make a new mnemonic.
 {% endtab %}
 
 {% tab title="Pre-built eth2deposit-cli" %}
-Download eth2deposit-cli.
+Descargar eth2deposit-cli.
 
 ```bash
 cd $HOME
